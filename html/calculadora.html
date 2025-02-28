@@ -3,77 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Consumos</title>
+    <title>Calculadora de Consumos Profesional</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <nav class="navbar">
-        <ul>
-            <li><a href="../index.html">Inicio</a></li>
-            <li><a href="#calculo">Cargar CSV</a></li>
-        </ul>
-    </nav>
+
+<nav class="navbar">
+    <ul>
+        <li><a href="../index.html" onclick="volverAlInicio()">Inicio</a></li>
+    </ul>
+</nav>
+
+<div class="container interaccion" id="seleccionModo">
+    <h1>Bienvenido a la Calculadora de Consumos</h1>
+    <p>Selecciona cómo quieres trabajar:</p>
     
-    <div class="container" id="inicio">
-        <h1>Calculadora de Consumos Anual y Periódico</h1>
-        
-        <div class="inputs">
-            <label for="consumoElectrico">Consumo Eléctrico Mensual (kWh):</label>
-            <input type="number" id="consumoElectrico" placeholder="Promedio mensual (kWh)">
+    <button onclick="seleccionarModo('manual')">💻 Introducir datos manualmente</button>
+    <button onclick="seleccionarModo('csv')">📂 Subir archivo CSV</button>
 
-            <label for="consumoAgua">Consumo de Agua Mensual (litros):</label>
-            <input type="number" id="consumoAgua" placeholder="Promedio mensual (litros)">
+    <h2>¿Quieres consejos personalizados para ahorrar?</h2>
+    <button onclick="mostrarConsejos()">💡 Dame consejos</button>
+</div>
 
-            <label for="consumoOficina">Consumo de Consumibles Oficina Mensual:</label>
-            <input type="number" id="consumoOficina" placeholder="Promedio mensual (unidades)">
+<div class="container" id="inicio" style="display: none;">
+    <h1>Calculadora de Consumos Anual y Periódico</h1>
+    <div class="inputs">
+        <label>Consumo Eléctrico Mensual (kWh):</label>
+        <input type="number" id="consumoElectrico">
 
-            <label for="consumoLimpieza">Consumo de Productos de Limpieza Mensual:</label>
-            <input type="number" id="consumoLimpieza" placeholder="Promedio mensual (unidades)">
-        </div>
+        <label>Consumo de Agua Mensual (litros):</label>
+        <input type="number" id="consumoAgua">
 
-        <div class="buttons">
-            <button onclick="calcularConsumos()">Calcular</button>
-        </div>
+        <label>Consumibles Oficina Mensual:</label>
+        <input type="number" id="consumoOficina">
 
-        <div class="resultados">
-            <h2>Resumen de Consumos Anuales</h2>
-            <ul id="listaResultados"></ul>
-        </div>
-
-        <div class="reduccion">
-            <h2>Cómo Reducir los Consumos:</h2>
-            <ul id="estrategias">
-                <li>Para el consumo eléctrico: Usar electrodomésticos eficientes, mejorar el aislamiento.</li>
-                <li>Para el consumo de agua: Instalar dispositivos de bajo flujo, reparar fugas.</li>
-                <li>Para los consumibles de oficina: Reducir el uso de papel, fomentar el uso de documentos digitales.</li>
-                <li>Para los productos de limpieza: Usar productos ecológicos, ajustar la cantidad utilizada.</li>
-            </ul>
-        </div>
-    </div>
-    
-    <div class="container" id="calculo">
-        <h1>Cargar Archivo CSV</h1>
-        <input type="file" id="csvFile" accept=".csv">
-        <button onclick="procesarCSV()">Subir y Calcular</button>
-
-        <div class="resultados">
-            <h2>Resultados del Cálculo</h2>
-            <table id="tablaResultados">
-                <thead>
-                    <tr>
-                        <th>Consumo Eléctrico (kWh)</th>
-                        <th>Consumo de Agua (litros)</th>
-                        <th>Consumibles Oficina (unidades)</th>
-                        <th>Productos de Limpieza (unidades)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Aquí se llenarán los datos desde el CSV -->
-                </tbody>
-            </table>
-        </div>
+        <label>Productos de Limpieza Mensual:</label>
+        <input type="number" id="consumoLimpieza">
     </div>
 
-    <script src="script.js"></script>
+    <button onclick="calcularConsumos()">Calcular</button>
+
+    <div class="resultados">
+        <h2>Resumen Anual</h2>
+        <ul id="listaResultados"></ul>
+    </div>
+</div>
+
+<div class="container" id="calculo" style="display: none;">
+    <h1>Subir Archivo CSV</h1>
+    <input type="file" id="csvFile" accept=".csv">
+    <button onclick="procesarCSV()">Subir y Calcular</button>
+
+    <div class="resultados">
+        <h2>Resultados</h2>
+        <table id="tablaResultados">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Consumo Eléctrico (kWh)</th>
+                    <th>Consumo de Agua (litros)</th>
+                    <th>Consumibles Oficina (unidades)</th>
+                    <th>Productos de Limpieza (unidades)</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<div class="container nuevo-estilo" id="resumen-nuevo">
+    <h1>Resumen Alternativo</h1>
+    <ul id="nuevaListaResultados"></ul>
+</div>
+
+<div class="container" id="graficos" style="display: none;">
+    <h2>Gráficos de Consumo</h2>
+    <canvas id="graficoConsumos"></canvas>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
